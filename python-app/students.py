@@ -19,4 +19,11 @@ def get_student(conn, name):
 
 
 def average_grade(conn):
-    raise NotImplementedError("La fonction sera implémentée après le premier test")
+    with conn.cursor() as cur:
+        cur.execute("SELECT AVG(grade) FROM students")
+        result = cur.fetchone()
+
+        if result[0] is None:
+            return 0.0
+
+        return float(result[0])
